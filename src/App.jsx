@@ -8,6 +8,7 @@ import Regions from './pages/Regions';
 import Search from './pages/Search';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
+import Favorites from './pages/Favorites';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('user'));
@@ -66,6 +67,7 @@ function App() {
         />
         <Routes>
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="/" element={<Home />} />
           <Route 
             path="/homa" 

@@ -1,10 +1,34 @@
-// src/components/CountryCard.jsx
 import { Link } from 'react-router-dom';
+import { useFavorites } from '../context/FavoriteContext';
 
 const CountryCard = ({ country }) => {
+  const { toggleFavorite, isFavorite } = useFavorites();
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault(); // Prevent navigation when clicking the heart
+    toggleFavorite(country);
+  };
+
   return (
     <Link to={`/country/${country.name.common}`}>
-      <div className="card h-full transform transition duration-300 hover:scale-105 shadow-lg rounded-lg">
+      <div className="card h-full transform transition duration-300 hover:scale-105 shadow-lg rounded-lg relative">
+        
+        {/* Favorite Button */}
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-2 right-2 z-10 bg-white rounded-full p-1 shadow-md hover:scale-110 transition"
+        >
+          {isFavorite(country) ? (
+            <svg className="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+            </svg>
+          ) : (
+            <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.682l-7.682-7.682a4.5 4.5 0 010-6.364z" />
+            </svg>
+          )}
+        </button>
+
         <div className="relative h-48 overflow-hidden rounded-t-lg">
           <img 
             src={country.flags.svg || country.flags.png} 
@@ -15,6 +39,7 @@ const CountryCard = ({ country }) => {
             {country.region}
           </div>
         </div>
+
         <div className="p-4 bg-gray-100 justify-center text-center space-y-4 rounded-b-lg">
           <h3 className="text-xl font-bold mb-2 text-gray-800">{country.name.common}</h3>
           <div className='flex flex-row text-zinc-500 space-x-4'>
