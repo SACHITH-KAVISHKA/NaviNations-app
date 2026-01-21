@@ -1,15 +1,17 @@
 // src/services/api.js
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL = 'https://restcountries.com/v3.1';
+const BASE_URL = "https://restcountries.com/v3.1";
 
 // Get all countries
 export const getAllCountries = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/all`);
+    const response = await axios.get(
+      `${BASE_URL}/all?fields=name,flags,capital,region,population,cca3`,
+    );
     return response.data;
   } catch (error) {
-    console.error('Error fetching all countries:', error);
+    console.error("Error fetching all countries:", error);
     throw error;
   }
 };
